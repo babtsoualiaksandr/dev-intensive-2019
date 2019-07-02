@@ -56,15 +56,19 @@ fun num2str(n: Int , units: TimeUnits = TimeUnits.SECOND): String {
         TimeUnits.DAY -> text_forms = arrayOf("день" , "дня" , "дней")
 
     }
-    val nn = (n.absoluteValue % 100)
+
+    val nresult = abs(n)
+    val nn = (abs(n) % 100)
+
     var n1 = nn % 10;
+
     if (nn > 10 && nn < 20) {
-        return "$nn ${text_forms[2]}" }
+        return "$nresult ${text_forms[2]}" }
     if (n1 > 1 && n1 < 5) {
-        return "$nn ${text_forms[1]}" }
+        return "$nresult ${text_forms[1]}" }
     if (n1 == 1) {
         return "$nn ${text_forms[0]}" }
-    return "$nn ${text_forms[2]}"
+    return "$nresult ${text_forms[2]}"
 }
 
 fun Date.humanizeDiff(date: Date= Date()): String {
@@ -98,8 +102,8 @@ fun Date.humanizeDiff(date: Date= Date()): String {
         in -26*60*60..-22*60*60-> "день назад"
         in 22*60*60..26*60*60 -> "через день"
         //26ч - 360д "N дней назад"
-        in -360*24*60*60..-26*60*60-> "${num2str((time/24/60/60).toInt(), TimeUnits.DAY)} назад"
-        in 26*60*60..360*24*60*60 -> "через ${num2str((time/24/60/60).toInt(), TimeUnits.DAY)}"
+        in -360*24*60*60..-26*60*60-> "${num2str((time/60/60/24).toInt(), TimeUnits.DAY)} назад"
+        in 26*60*60..360*24*60*60 -> "через ${num2str((time/60/60/24).toInt(), TimeUnits.DAY)}"
         //>360д "более года назад"
         else -> {if (time>0) {"более чем через год"} else {"более года назад"}}
 
