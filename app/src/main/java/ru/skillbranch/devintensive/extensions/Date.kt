@@ -13,21 +13,21 @@ fun Date.format (pattern:String="HH:mm:ss dd.MM.yy"):String {
 
 }
 
-fun Date.add(value: Int, units: TimeUnit = TimeUnit.SECOND): Date {
+fun Date.add(value: Int, units: TimeUnits = TimeUnits.SECOND): Date {
     var time = this.time
 
     time += when (units){
-        TimeUnit.SECOND -> value * SECOND
-        TimeUnit.MINUTE -> value * MINUTE
-        TimeUnit.HOUR -> value * HOUR
-        TimeUnit.DAY -> value * DAY
+        TimeUnits.SECOND -> value * SECOND
+        TimeUnits.MINUTE -> value * MINUTE
+        TimeUnits.HOUR -> value * HOUR
+        TimeUnits.DAY -> value * DAY
 
     }
     this.time = time
     return this
 }
 
-enum class TimeUnit {
+enum class TimeUnits {
     SECOND,
     MINUTE,
     HOUR,
@@ -46,13 +46,13 @@ enum class TimeUnit {
 //>360д "более года назад"
 
 
-fun num2str(n: Int , units: TimeUnit = TimeUnit.SECOND): String {
+fun num2str(n: Int , units: TimeUnits = TimeUnits.SECOND): String {
     val text_forms: Array<String>
     when (units) {
-        TimeUnit.SECOND -> text_forms = arrayOf("секунда" , "секунд" , "секунд")
-        TimeUnit.MINUTE -> text_forms = arrayOf("минута" , "минуты" , "минут")
-        TimeUnit.HOUR -> text_forms = arrayOf("часа" , "часа" , "часов")
-        TimeUnit.DAY -> text_forms = arrayOf("день" , "дня" , "дней")
+        TimeUnits.SECOND -> text_forms = arrayOf("секунду" , "секунд" , "секунд")
+        TimeUnits.MINUTE -> text_forms = arrayOf("минуту" , "минуты" , "минут")
+        TimeUnits.HOUR -> text_forms = arrayOf("час" , "часа" , "часов")
+        TimeUnits.DAY -> text_forms = arrayOf("день" , "дня" , "дней")
 
     }
     val nn = (n.absoluteValue % 100)
@@ -84,20 +84,20 @@ fun Date.humanizeDiff(date: Date= Date()): String {
         in 45001..75000 -> "через минуту"
         in -75000..-45000 -> "минуту назад"
         //75с - 45мин "N минут назад"
-        in 75000..45*60*1000 -> "через ${num2str((time/1000 / 60).toInt(), TimeUnit.MINUTE)}"
-        in -45*60*1000..-75000 -> "${num2str((time / 1000 / 60).toInt(), TimeUnit.MINUTE)}  назад"
+        in 75000..45*60*1000 -> "через ${num2str((time/1000 / 60).toInt(), TimeUnits.MINUTE)}"
+        in -45*60*1000..-75000 -> "${num2str((time / 1000 / 60).toInt(), TimeUnits.MINUTE)} назад"
         //45мин - 75мин "час назад"
         in -75*60*1000+1..-45*60*1000 -> "час назад"
         in 45*60*1000..75*60*1000 -> "через час"
         //75мин 22ч "N часов назад"
-        in -22*60*60*1000+1..-75*60*1000 -> "${num2str((time/1000/60/60).toInt(), TimeUnit.HOUR)} назад"
-        in 75*60*1000..22*60*60*1000 -> "через ${num2str((time/1000/60/60).toInt(), TimeUnit.HOUR)}"
+        in -22*60*60*1000+1..-75*60*1000 -> "${num2str((time/1000/60/60).toInt(), TimeUnits.HOUR)} назад"
+        in 75*60*1000..22*60*60*1000 -> "через ${num2str((time/1000/60/60).toInt(), TimeUnits.HOUR)}"
         //22ч - 26ч "день назад"
         in -26*60*60*1000+1..22*60*60*1000 -> "день назад"
         in 22*60*60*1000..26*60*60*1000 -> "через день"
         //26ч - 360д "N дней назад"
-        in -360*24*60*60*1000+1..26*60*60*1000 -> "${num2str((time/1000/60/60/24).toInt(), TimeUnit.DAY)} назад"
-        in 26*60*60*100..360*24*60*60*1000 -> "через ${num2str((time/1000/60/60/24).toInt(), TimeUnit.DAY)}"
+        in -360*24*60*60*1000+1..26*60*60*1000 -> "${num2str((time/1000/60/60/24).toInt(), TimeUnits.DAY)} назад"
+        in 26*60*60*100..360*24*60*60*1000 -> "через ${num2str((time/1000/60/60/24).toInt(), TimeUnits.DAY)}"
         //>360д "более года назад"
         else -> {if (time>0) {"более чем через год"} else {"более года назад"}}
 
