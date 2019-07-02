@@ -31,6 +31,8 @@ data class User(
             "It's Alive!!! \n" +
                     "${if (lastName === "Doe") "His name id $firstName  $lastName" else "And his name is $firstName $lastName !!"} \n"
         )
+
+        getIntro()
     }
 
     private fun getIntro() = """
