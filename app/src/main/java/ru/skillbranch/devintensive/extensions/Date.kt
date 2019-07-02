@@ -67,11 +67,11 @@ fun num2str(n: Int , units: TimeUnits = TimeUnits.SECOND): String {
     return "$nn ${text_forms[2]}"
 }
 
-fun Date.humanizeDiff_My(date: Date= Date()): String {
+fun Date.humanizeDiff(date: Date= Date()): String {
     println(this.time)
     println(date.time)
 
-    var time = this.time - date.time+6
+    var time = this.time - date.time+10
     println(time)
 
     return when (time) {
@@ -109,8 +109,8 @@ fun Date.humanizeDiff_My(date: Date= Date()): String {
 
 }
 
-fun Date.humanizeDiff(date: Date = Date()): String {
-    val diffInMillies = ((this.time - date.time) / SECOND).toInt()
+fun Date.humanizeDiff_new(date: Date = Date()): String {
+    val diffInMillies = ((this.time - date.time+6) / SECOND).toInt()
 
     val minute = 60
     val hour = 60 * 60
