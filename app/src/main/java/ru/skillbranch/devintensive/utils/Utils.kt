@@ -32,37 +32,17 @@ object Utils {
 
 
     fun toInitials(firstName: String?, lastName: String?): String? {
-
-        if ((firstName==null)||(firstName==" ")|| (firstName=="") && (lastName==null) || (firstName==" ")|| (firstName=="")) {
+        if (firstName.isNullOrBlank() && lastName.isNullOrBlank())
             return null
-        }
 
-        var i1: String?
-        var i2: String?
+        val fNameInitial = firstName?.first()
+        val lNameInitial = lastName?.first()
 
-        when (firstName) {
-            null, "", " " -> i1= null
-            else -> i1 = firstName[0].toString().toUpperCase()
-        }
-
-        when (lastName) {
-            null, "", " "  -> i2= null
-            else -> i2 = lastName[0].toString().toUpperCase()
-        }
-
-        var result: String?
-        if ((i1 == null) && (i2 != null))
-        {
-            result = i2
-        } else {
-            if ((i1 != null) && (i2 == null)) {
-                result = i1
-            } else {
-                result = "$i1$i2"
-            }
-        }
-
-        return result
+        return (when {
+            fNameInitial == null -> "$lNameInitial"
+            lNameInitial == null -> "$fNameInitial"
+            else -> "$fNameInitial$lNameInitial"
+        }).toUpperCase()
     }
 
     fun transliteration(payload: String, divider: String = " "): String {
