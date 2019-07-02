@@ -65,7 +65,7 @@ object Utils {
         return result
     }
 
-    fun transliteration(payload: String, divider: String? = " "): String {
+    fun transliteration_(payload: String, divider: String? = " "): String {
 
         val lexicon = mapOf(
             "а" to "a",
@@ -137,8 +137,8 @@ object Utils {
             "Я" to "YA"
         )
 
-        var parts: List<String> =  payload?.split(divider.orEmpty())
-        var resultList: MutableList<String> = mutableListOf()
+        val parts: List<String> =  payload?.split(divider.orEmpty())
+        val resultList: MutableList<String> = mutableListOf()
 
         for (partsitem in parts) {
             val builder = StringBuilder()
@@ -151,6 +151,7 @@ object Utils {
             resultList.add(builder.toString())
         }
 
+
         var result: String=""
         for (i in 0..resultList.count()-1) {
             if (i!= resultList.count()-1) {result = result + resultList[i] + divider} else {result = result + resultList[i]}
@@ -158,6 +159,94 @@ object Utils {
         return result
     }
 
+    fun transliteration (payload: String, divider: String = " "): String {
+        var result = StringBuilder()
+        println("payload= $payload")
+        for (symbol in payload){
+            println("symbol= $symbol")
+            println("divider= $divider")
+            val isRus = translitMap.containsKey(symbol)
 
+            when (symbol) {
+                divider[0] -> result.append(divider)
+                ' ' -> result.append(divider)
 
+                else -> {if (isRus) result.append(translitMap[symbol]) else result.append(symbol)}
+            }
+
+        }
+
+        println("result= $result")
+        return result.toString()
+    }
+
+    private val translitMap = mapOf(
+        'а' to "a",
+        'б' to "b",
+        'в' to "v",
+        'г' to "g",
+        'д' to "d",
+        'е' to "e",
+        'ё' to "e",
+        'ж' to "zh",
+        'з' to "z",
+        'и' to "i",
+        'й' to "i",
+        'к' to "k",
+        'л' to "l",
+        'м' to "m",
+        'н' to "n",
+        'о' to "o",
+        'п' to "p",
+        'р' to "r",
+        'с' to "s",
+        'т' to "t",
+        'у' to "u",
+        'ф' to "f",
+        'х' to "h",
+        'ц' to "c",
+        'ч' to "ch",
+        'ш' to "sh",
+        'щ' to "sh",
+        'ъ' to "",
+        'ь' to "",
+        'э' to "e",
+        'ю' to "yu",
+        'я' to "ya",
+
+        'А' to "A",
+        'Б' to "B",
+        'В' to "V",
+        'Г' to "G",
+        'Д' to "D",
+        'Е' to "E",
+        'Ё' to "E",
+        'Ж' to "Zh",
+        'З' to "Z",
+        'И' to "I",
+        'Й' to "I",
+        'К' to "K",
+        'Л' to "L",
+        'М' to "M",
+        'Н' to "N",
+        'О' to "O",
+        'П' to "P",
+        'Р' to "R",
+        'С' to "S",
+        'Т' to "T",
+        'У' to "U",
+        'Ф' to "F",
+        'Х' to "H",
+        'Ц' to "C",
+        'Ч' to "Ch",
+        'Ш' to "Sh",
+        'Щ' to "Sh",
+        'Ъ' to "",
+        'Ь' to "",
+        'Э' to "E",
+        'Ю' to "Yu",
+        'Я' to "Ya"
+    )
 }
+
+
