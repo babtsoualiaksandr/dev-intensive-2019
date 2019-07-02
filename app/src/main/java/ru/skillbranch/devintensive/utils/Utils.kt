@@ -33,7 +33,7 @@ object Utils {
 
     fun toInitials(firstName: String?, lastName: String?): String? {
 
-        if ((firstName==null) && (lastName==null)) {
+        if ((firstName==null)||(firstName==" ")|| (firstName=="") && (lastName==null) || (firstName==" ")|| (firstName=="")) {
             return null
         }
 
