@@ -27,11 +27,9 @@ fun Date.add(value: Int, units: TimeUnits = TimeUnits.SECOND): Date {
     return this
 }
 
-interface IPlurar {
-    fun plural(value: Int): String
-}
 
-enum class TimeUnits: IPlurar  {
+
+enum class TimeUnits  {
     SECOND {
         override fun plural(value:Int) : String {
             val result = num2str(value,SECOND )
@@ -55,7 +53,9 @@ enum class TimeUnits: IPlurar  {
             val result = num2str(value,DAY )
             return result;        }
 
-    },
+    };
+
+    abstract fun plural(value:Int) : String
 }
 
 
