@@ -1,7 +1,6 @@
 package ru.skillbranch.devintensive.extensions
 
 import java.util.*
-import kotlin.math.absoluteValue
 import kotlin.math.abs
 
 const val SECOND = 1000L
