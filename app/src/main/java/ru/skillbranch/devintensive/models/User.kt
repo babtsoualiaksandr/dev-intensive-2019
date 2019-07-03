@@ -2,6 +2,10 @@ package ru.skillbranch.devintensive.models
 import ru.skillbranch.devintensive.utils.Utils
 import java.util.*
 
+
+
+//https://github.com/Styort/dev-intensive-2019
+
 data class User(
     val id : String,
     var firstName : String?,

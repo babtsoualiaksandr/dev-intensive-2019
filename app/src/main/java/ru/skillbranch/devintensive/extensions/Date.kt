@@ -28,12 +28,48 @@ fun Date.add(value: Int, units: TimeUnits = TimeUnits.SECOND): Date {
     return this
 }
 
-enum class TimeUnits {
-    SECOND,
-    MINUTE,
-    HOUR,
-    DAY
+interface IPlurar {
+    fun plural(value: Int): String
 }
+
+enum class TimeUnits: IPlurar  {
+    SECOND {
+        override fun plural(value:Int) : String {
+            val result = num2str(value,SECOND )
+            return result;        }
+
+    },
+    MINUTE {
+        override fun plural(value:Int) : String {
+            val result = num2str(value,MINUTE )
+            return result;        }
+
+    },
+    HOUR {
+        override fun plural(value:Int) : String {
+            val result = num2str(value,HOUR )
+            return result;        }
+
+    },
+    DAY{
+        override fun plural(value:Int) : String {
+            val result = num2str(value,DAY )
+            return result;        }
+
+    },
+}
+
+
+//**plural
+//Необходимо реализовать метод plural для enum TimeUnits
+//+2
+//Реализуй метод plural для всех перечислений TimeUnits следующего вида TimeUnits.SECOND.plural(value:Int) возвращающую значение
+// с праильно склоненной единицой измерения
+//Пример:
+//TimeUnits.SECOND.plural(1) //1 секунду
+//TimeUnits.MINUTE.plural(4) //4 минуты
+//TimeUnits.HOUR.plural(19) //19 часов
+//TimeUnits.DAY.plural(222) //222 дня
 
 
 //0с - 1с "только что"
