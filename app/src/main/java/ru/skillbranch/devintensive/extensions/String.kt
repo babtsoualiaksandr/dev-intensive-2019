@@ -33,17 +33,18 @@ fun String.stripHtml(): String {
 
     for (i in 0..this.length-1) {
 
-        if (this[i]== '<' && isTag == false) {
+        if ((this[i]== '<')||((this[i]== '&')) && isTag == false) {
 
             isTag = true
         }
-        if (this[i]== '>' && isTag == true) {
+        if ((this[i]== '>')||(this[i]==';') && isTag == true) {
 
             isTag = false
         }
 
         if (this[i]!='<' && this[i]!='>'&& isTag ==false) {
             if (this[i]==' '&& this[i-1]==' ') {
+
             } else  result.append(this[i])
         }
     }
