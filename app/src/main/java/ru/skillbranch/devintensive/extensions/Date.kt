@@ -102,7 +102,7 @@ fun num2str(n: Int , units: TimeUnits = TimeUnits.SECOND): String {
     if (n1 > 1 && n1 < 5) {
         return "$nresult ${text_forms[1]}" }
     if (n1 == 1) {
-        return "$nn ${text_forms[0]}" }
+        return "$nresult ${text_forms[0]}" }
     return "$nresult ${text_forms[2]}"
 }
 

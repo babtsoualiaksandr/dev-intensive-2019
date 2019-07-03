@@ -28,6 +28,8 @@ return result.toString()
 
 // последовательностей ("& < > ' "")
 fun String.stripHtml(): String {
+
+
     var result = StringBuilder()
     var isTag = false
 
