@@ -85,7 +85,7 @@ enum class TimeUnits  {
 fun num2str(n: Int , units: TimeUnits = TimeUnits.SECOND): String {
     val text_forms: Array<String>
     when (units) {
-        TimeUnits.SECOND -> text_forms = arrayOf("секунду" , "секунд" , "секунд")
+        TimeUnits.SECOND -> text_forms = arrayOf("секунду" , "секунды" , "секунд")
         TimeUnits.MINUTE -> text_forms = arrayOf("минуту" , "минуты" , "минут")
         TimeUnits.HOUR -> text_forms = arrayOf("час" , "часа" , "часов")
         TimeUnits.DAY -> text_forms = arrayOf("день" , "дня" , "дней")
