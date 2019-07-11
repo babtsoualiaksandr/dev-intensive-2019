@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="font_large_24">24sp</dimen>
+    <dimen name="font_normal_16">16sp</dimen>
+    <dimen name="font_small_8">8sp</dimen>
+
+    <dimen name="spasing_huge_32">32dp</dimen>
+    <dimen name="spasing_large_24">24dp</dimen>
+    <dimen name="spasing_normal_16">16dp</dimen>
+    <dimen name="spasing_small_8">8dp</dimen>
+    <dimen name="spasing_tiny_4">4dp</dimen>
+</resources>
