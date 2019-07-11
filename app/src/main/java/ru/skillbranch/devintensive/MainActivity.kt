@@ -18,11 +18,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         if (v?.id == R.id.iv_send) {
-           val (phrase, color) =  benderObj.listenAnswer(messageEt.text.toString().toLowerCase())
+            val (phrase, color) = benderObj.listenAnswer(messageEt.text.toString().toLowerCase())
 
             messageEt.setText("")
-            val (r,g,b) = color
-            benderImage.setColorFilter(Color.rgb(r,g,b), PorterDuff.Mode.MULTIPLY)
+            val (r, g, b) = color
+            benderImage.setColorFilter(Color.rgb(r, g, b), PorterDuff.Mode.MULTIPLY)
             textTXT.text = phrase
 
         }
@@ -56,8 +56,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         benderObj = Bender(Bender.Status.valueOf(status), Bender.Question.valueOf(question))
 
-        val (r,g,b) = benderObj.status.color
-        benderImage.setColorFilter(Color.rgb(r,g,b), PorterDuff.Mode.MULTIPLY)
+        val (r, g, b) = benderObj.status.color
+        benderImage.setColorFilter(Color.rgb(r, g, b), PorterDuff.Mode.MULTIPLY)
 
         textTXT.text = benderObj.askQuestion()
 
@@ -100,6 +100,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onSaveInstanceState(outState)
         outState?.putString("STATUS", benderObj.status.name)
         outState?.putString("QUESTION", benderObj.question.name)
-        Log.d("M_MainActivity","onSaveInstanceState${benderObj.status.name} ${benderObj.question.name}")
+        Log.d("M_MainActivity", "onSaveInstanceState${benderObj.status.name} ${benderObj.question.name}")
     }
+
 }
+
+
