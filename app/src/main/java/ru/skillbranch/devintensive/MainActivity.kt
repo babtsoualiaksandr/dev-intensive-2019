@@ -1,5 +1,6 @@
 package ru.skillbranch.devintensive
 
+import android.app.Activity
 import android.graphics.Color
 import android.graphics.PorterDuff
 import androidx.appcompat.app.AppCompatActivity
@@ -8,13 +9,32 @@ import android.os.PersistableBundle
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_main.*
+import ru.skillbranch.devintensive.extensions.isKeyboardOpen
 import ru.skillbranch.devintensive.models.Bender
 
-class MainActivity : AppCompatActivity(), View.OnClickListener {
+class MainActivity : AppCompatActivity(), View.OnClickListener, TextView.OnEditorActionListener {
+
+
+
+    override fun onEditorAction(textView: TextView, actionId: Int, event: KeyEvent?): Boolean {
+
+       if (actionId == EditorInfo.IME_ACTION_DONE) {
+           onClick(sendBtn)
+           Log.d("M_MainActivity", "Нажали точно ")
+           Log.d("M_MainActivity","${this.isKeyboardOpen()}")
+
+
+
+           return false
+       }
+        return false
+    }
+
 
     override fun onClick(v: View?) {
         if (v?.id == R.id.iv_send) {
@@ -24,6 +44,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             val (r, g, b) = color
             benderImage.setColorFilter(Color.rgb(r, g, b), PorterDuff.Mode.MULTIPLY)
             textTXT.text = phrase
+
+            Log.d("M_MainActivity","${this.isKeyboardOpen()}")
 
         }
     }
@@ -39,6 +61,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
 
 
         //benderImage = findViewById(R.id.iv_bender)
@@ -62,6 +85,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         textTXT.text = benderObj.askQuestion()
 
         sendBtn.setOnClickListener(this)
+        messageEt.setOnEditorActionListener(this)
+
+
+
+
 
 
     }
@@ -102,6 +130,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         outState?.putString("QUESTION", benderObj.question.name)
         Log.d("M_MainActivity", "onSaveInstanceState${benderObj.status.name} ${benderObj.question.name}")
     }
+
 
 }
 

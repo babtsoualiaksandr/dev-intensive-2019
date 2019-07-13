@@ -1,12 +1,12 @@
 package ru.skillbranch.devintensive.extensions
 
 import android.app.Activity
-import android.content.Context
+import android.graphics.Rect
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import androidx.core.content.ContextCompat.getSystemService
-
-
+import android.opengl.ETC1.getHeight
+import android.view.ViewTreeObserver
+import android.widget.RelativeLayout
 
 
 fun Activity.hideKeyboard() {
@@ -18,4 +18,39 @@ fun Activity.hideKeyboard() {
         view = View(this)
     }
     imm.hideSoftInputFromWindow(view!!.getWindowToken(), 0)
+}
+
+fun Activity.isKeyboardOpen(): Boolean {
+
+    var result: Boolean = false
+    val contentView = RelativeLayout(this)
+    contentView.getViewTreeObserver().addOnGlobalLayoutListener(ViewTreeObserver.OnGlobalLayoutListener {
+        val r = Rect()
+        contentView.getWindowVisibleDisplayFrame(r)
+        val screenHeight = contentView.getRootView().getHeight()
+
+        // r.bottom is the position above soft keypad or device button.
+        // if keypad is shown, the r.bottom is smaller than that before.
+        val keypadHeight = screenHeight - r.bottom
+
+
+
+        if (keypadHeight > screenHeight * 0.15) { // 0.15 ratio is perhaps enough to determine keypad height.
+            result = true
+        } else {
+            result = false
+        }
+    })
+
+
+
+    val rootView = this.window.decorView // this = activity
+    rootView.getWindowVisibleDisplayFrame(Rect())
+
+    val heightView = rootView.getHeight()
+    val widthView = rootView.getWidth()
+
+    val screenHeight = rootView.getRootView().getHeight()
+
+    return result
 }
