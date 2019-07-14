@@ -5,6 +5,7 @@ import android.util.Log
 class Bender(var status: Status = Status.NORMAL, var question: Question = Question.NAME) {
 
     var wrongAnswer:Int = 0
+    var allAnswer:Int = 0
 
     fun askQuestion(): String = when (question) {
 
@@ -19,34 +20,39 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
     fun listenAnswer(answer: String): Pair<String, Triple<Int, Int, Int>> {
     Log.d("M_Bender","answer $answer")
         Log.d("M_Bender","valid ${question.validate(answer)}")
-    if (question.validate(answer)) {
-        return if (question.answers.contains(answer.toLowerCase())) {
-            question = question.nextQuestion()
 
-            "Отлично - ты справился\n${question.question}" to status.color
-        } else {
-            wrongAnswer += 1
-            if (wrongAnswer < 4) {
-                status = status.nextStatus()
-                Log.d("M_Bender", "$wrongAnswer")
-                Log.d("M_Bender", "Это неправильный ответ\n${question.question}")
-                Log.d("M_Bender", "${status.color}")
-                "Это неправильный ответ\n${question.question}" to status.color
+        if (allAnswer < 5 ) {
+            if (question.validate(answer)) {
+                return if (question.answers.contains(answer.toLowerCase())) {
+                    allAnswer += 1
+
+                    question = question.nextQuestion()
+                    "Отлично - ты справился\n${question.question}" to status.color
+
+                } else {
+                    wrongAnswer += 1
+                    if (wrongAnswer < 4) {
+                        status = status.nextStatus()
+                        Log.d("M_Bender", "$wrongAnswer")
+                        Log.d("M_Bender", "Это неправильный ответ\n${question.question}")
+                        Log.d("M_Bender", "${status.color}")
+                        "Это неправильный ответ\n${question.question}" to status.color
+                    } else {
+                        status = status.nextStatus()
+                        question = Question.NAME
+                        wrongAnswer = 0
+                        Log.d("M_Bender", "$wrongAnswer")
+                        Log.d("M_Bender", "Это неправильный ответ. Давай все по новой\n${question.question}")
+                        Log.d("M_Bender", "${status.color}")
+
+                        "Это неправильный ответ. Давай все по новой\n${question.question}" to status.color
+                    }
+
+                }
             } else {
-                status = status.nextStatus()
-                question = Question.NAME
-                wrongAnswer = 0
-                Log.d("M_Bender", "$wrongAnswer")
-                Log.d("M_Bender", "Это неправильный ответ. Давай все по новой\n${question.question}")
-                Log.d("M_Bender", "${status.color}")
-
-                "Это неправильный ответ. Давай все по новой\n${question.question}" to status.color
+                return "${question.errorMessage()}\n${question.question}" to status.color
             }
-
-        }
-    } else {
-        return "${question.errorMessage()}\n${question.question}" to status.color
-    }
+        } else { return "На этом все, вопросов больше нет" to Triple(255,255,255)}
     }
 
 
