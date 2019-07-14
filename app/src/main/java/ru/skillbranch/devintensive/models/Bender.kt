@@ -1,6 +1,10 @@
 package ru.skillbranch.devintensive.models
 
+import android.util.Log
+
 class Bender(var status: Status = Status.NORMAL, var question: Question = Question.NAME) {
+
+    var wrongAnswer:Int = 0
 
     fun askQuestion(): String = when (question) {
 
@@ -14,12 +18,30 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
 
     fun listenAnswer(answer: String): Pair<String, Triple<Int, Int, Int>> {
 
+
         return if (question.answers.contains(answer)) {
             question = question.nextQuestion()
+
             "Отлично - ты справился\n${question.question}" to status.color
         }else {
-            status = status.nextStatus()
-            "Это не правильный ответ!\n${question.question}" to status.color
+            wrongAnswer += 1
+            if (wrongAnswer < 4) {
+                status = status.nextStatus()
+                Log.d("M_Bender","$wrongAnswer")
+                Log.d("M_Bender","Это неправильный ответ\n${question.question}")
+                Log.d("M_Bender","${status.color}")
+                "Это неправильный ответ\n${question.question}" to status.color
+            } else {
+                status = status.nextStatus()
+                question = Question.NAME
+                wrongAnswer =0
+                Log.d("M_Bender","$wrongAnswer")
+                Log.d("M_Bender","Это неправильный ответ. Давай все по новой\n${question.question}")
+                Log.d("M_Bender","${status.color}")
+
+                "Это неправильный ответ. Давай все по новой\n${question.question}" to status.color
+            }
+
         }
     }
 
