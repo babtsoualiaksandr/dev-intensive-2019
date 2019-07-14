@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, TextView.OnEdito
             messageEt.setText("")
             val (r, g, b) = color
             benderImage.setColorFilter(Color.rgb(r, g, b), PorterDuff.Mode.MULTIPLY)
-            textTXT.text = phrase
+            textTxt.text = phrase
 
             Log.d("M_MainActivity","${this.isKeyboardOpen()}")
 
@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, TextView.OnEdito
 
 
     lateinit var benderImage: ImageView
-    lateinit var textTXT: TextView
+    lateinit var textTxt: TextView
     lateinit var messageEt: EditText
     lateinit var sendBtn: ImageView
     lateinit var benderObj: Bender
@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, TextView.OnEdito
         //benderImage = findViewById(R.id.iv_bender)
 
         benderImage = iv_bender
-        textTXT = tv_text
+        textTxt = tv_text
         messageEt = et_message
         sendBtn = iv_send
 
@@ -82,7 +82,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, TextView.OnEdito
         val (r, g, b) = benderObj.status.color
         benderImage.setColorFilter(Color.rgb(r, g, b), PorterDuff.Mode.MULTIPLY)
 
-        textTXT.text = benderObj.askQuestion()
+        textTxt.text = benderObj.askQuestion()
 
         sendBtn.setOnClickListener(this)
         messageEt.setOnEditorActionListener(this)
