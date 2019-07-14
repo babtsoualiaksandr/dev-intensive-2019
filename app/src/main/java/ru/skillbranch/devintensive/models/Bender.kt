@@ -31,7 +31,7 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
 
                 } else {
                     wrongAnswer += 1
-                    if (wrongAnswer < 4) {
+                    if (wrongAnswer < 5) {
                         status = status.nextStatus()
                         Log.d("M_Bender", "$wrongAnswer")
                         Log.d("M_Bender", "Это неправильный ответ\n${question.question}")
@@ -54,6 +54,22 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
             }
         } else { return "На этом все, вопросов больше нет" to Triple(255,255,255)}
     }
+
+
+  ///  Error in module3(ru.skillbranch.devintensive.InstrumentalTest1): androidx.test.espresso.base.DefaultFailureHandler$AssertionFailedWithCauseError:
+    // 'with text: is
+    // "Это неправильный ответ. Давай все по новой\nКак меня зовут?"'
+    // doesn't match the selected view. Expected: with text: is
+    // "Это неправильный ответ. Давай все по новой\nКак меня зовут?"
+    // Got: "AppCompatTextView{id=2131230913, res-name=tv_text, visibility=VISIBLE, width=320, height=100, has-focus=false,
+    // has-focusable=false, has-window-focus=true, is-clickable=false, is-enabled=true, is-focused=false, is-focusable=false,
+    // is-layout-requested=false, is-selected=false, layout-params=android.widget.LinearLayout$LayoutParams@a47407e, tag=null,
+    // root-is-layout-requested=false, has-input-connection=false, x=0.0, y=0.0, text=
+    // Это неправильный ответ\nКак меня зовут?,
+    // input-type=0, ime-target=false, has-links=false}"
+
+
+
 
 
     enum class Status (val color : Triple<Int, Int, Int>) {
