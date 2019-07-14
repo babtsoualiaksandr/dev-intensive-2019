@@ -41,6 +41,7 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
                     } else {
                         status = Status.NORMAL
                         question = Question.NAME
+                        wrongAnswer = 0
 
                         Log.d("M_Bender", "$wrongAnswer")
                         Log.d("M_Bender", "Это неправильный ответ. Давай все по новой\n${question.question}")
