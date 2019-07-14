@@ -1,12 +1,16 @@
 package ru.skillbranch.devintensive.extensions
 
 import android.app.Activity
+import android.content.Context
 import android.graphics.Rect
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.opengl.ETC1.getHeight
+import android.util.Log
+import android.util.TypedValue
 import android.view.ViewTreeObserver
 import android.widget.RelativeLayout
+import kotlin.math.roundToLong
 
 
 fun Activity.hideKeyboard() {
@@ -20,7 +24,7 @@ fun Activity.hideKeyboard() {
     imm.hideSoftInputFromWindow(view!!.getWindowToken(), 0)
 }
 
-fun Activity.isKeyboardOpen(): Boolean {
+fun Activity.isKeyboardOpen1(): Boolean {
 
     var result: Boolean = false
     val contentView = RelativeLayout(this)
@@ -53,4 +57,46 @@ fun Activity.isKeyboardOpen(): Boolean {
     val screenHeight = rootView.getRootView().getHeight()
 
     return result
+}
+
+
+fun Activity.isKeyboardOpen2(): Boolean{
+    val rootView = findViewById<View>(android.R.id.content)
+    Log.d("M_Activity","****")
+    val visibleBounds = Rect()
+    rootView.getWindowVisibleDisplayFrame(visibleBounds)
+    val heightDiff = rootView.height - visibleBounds.height()
+    Log.d("M_Activity","rootView.height  ${rootView.height} visibleBounds.height ${visibleBounds.height()}")
+   // val marginOfError = this.convertDpToPx(50F).roundToLong()
+
+    val result: Boolean = (heightDiff > 100)
+
+    return result
+}
+
+fun Activity.isKeyboardClosed2(): Boolean {
+    return this.isKeyboardOpen().not()
+}
+
+
+fun Activity.getRootView(): View {
+    return findViewById<View>(android.R.id.content)
+}
+fun Context.convertDpToPx(dp: Float): Float {
+    return TypedValue.applyDimension(
+        TypedValue.COMPLEX_UNIT_DIP,
+        dp,
+        this.resources.displayMetrics
+    )
+}
+fun Activity.isKeyboardOpen(): Boolean {
+    val visibleBounds = Rect()
+    this.getRootView().getWindowVisibleDisplayFrame(visibleBounds)
+    val heightDiff = getRootView().height - visibleBounds.height()
+    val marginOfError = Math.round(this.convertDpToPx(50F))
+    return heightDiff > marginOfError
+}
+
+fun Activity.isKeyboardClosed(): Boolean {
+    return !this.isKeyboardOpen()
 }

@@ -25,11 +25,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, TextView.OnEdito
 
        if (actionId == EditorInfo.IME_ACTION_DONE) {
            onClick(sendBtn)
-           Log.d("M_MainActivity", "Нажали точно ")
-           Log.d("M_MainActivity","${this.isKeyboardOpen()}")
-
-
-
            return false
        }
         return false
@@ -38,14 +33,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, TextView.OnEdito
 
     override fun onClick(v: View?) {
         if (v?.id == R.id.iv_send) {
-            val (phrase, color) = benderObj.listenAnswer(messageEt.text.toString().toLowerCase())
+            val (phrase, color) = benderObj.listenAnswer(messageEt.text.toString())
 
             messageEt.setText("")
             val (r, g, b) = color
             benderImage.setColorFilter(Color.rgb(r, g, b), PorterDuff.Mode.MULTIPLY)
             textTxt.text = phrase
 
-            Log.d("M_MainActivity","${this.isKeyboardOpen()}")
+            Log.d("M_MainActivity","Клава да    ${this.isKeyboardOpen()}")
 
         }
     }

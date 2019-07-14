@@ -17,32 +17,36 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
     }
 
     fun listenAnswer(answer: String): Pair<String, Triple<Int, Int, Int>> {
-
-
-        return if (question.answers.contains(answer)) {
+    Log.d("M_Bender","answer $answer")
+        Log.d("M_Bender","valid ${question.validate(answer)}")
+    if (question.validate(answer)) {
+        return if (question.answers.contains(answer.toLowerCase())) {
             question = question.nextQuestion()
 
             "Отлично - ты справился\n${question.question}" to status.color
-        }else {
+        } else {
             wrongAnswer += 1
             if (wrongAnswer < 4) {
                 status = status.nextStatus()
-                Log.d("M_Bender","$wrongAnswer")
-                Log.d("M_Bender","Это неправильный ответ\n${question.question}")
-                Log.d("M_Bender","${status.color}")
+                Log.d("M_Bender", "$wrongAnswer")
+                Log.d("M_Bender", "Это неправильный ответ\n${question.question}")
+                Log.d("M_Bender", "${status.color}")
                 "Это неправильный ответ\n${question.question}" to status.color
             } else {
                 status = status.nextStatus()
                 question = Question.NAME
-                wrongAnswer =0
-                Log.d("M_Bender","$wrongAnswer")
-                Log.d("M_Bender","Это неправильный ответ. Давай все по новой\n${question.question}")
-                Log.d("M_Bender","${status.color}")
+                wrongAnswer = 0
+                Log.d("M_Bender", "$wrongAnswer")
+                Log.d("M_Bender", "Это неправильный ответ. Давай все по новой\n${question.question}")
+                Log.d("M_Bender", "${status.color}")
 
                 "Это неправильный ответ. Давай все по новой\n${question.question}" to status.color
             }
 
         }
+    } else {
+        return "${question.errorMessage()}\n${question.question}" to status.color
+    }
     }
 
 
@@ -63,27 +67,53 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
         }
     }
 
+
+
+
+
     enum class Question(val question: String, val answers: List<String>) {
         NAME("Как меня зовут?", listOf("бендер", "bender")) {
             override fun nextQuestion(): Question = PROFESSION
+            //Question.NAME -> "Имя должно начинаться с заглавной буквы"
+            override fun validate(answer: String): Boolean = answer.trim().firstOrNull()?.isUpperCase() ?: false
+            override fun errorMessage(): String = "Имя должно начинаться с заглавной буквы"
         },
         PROFESSION("Назови мою профессию?", listOf("сгибальщик", "bender")) {
             override fun nextQuestion(): Question = MATERIAL
+            //Question.PROFESSION -> "Профессия должна начинаться со строчной буквы"
+            override fun validate(answer: String): Boolean = answer.trim().firstOrNull()?.isLowerCase() ?: false
+            override fun errorMessage(): String = "Профессия должна начинаться со строчной буквы"
         },
         MATERIAL("Из чего я сделан?", listOf("металл", "дерево","metal", "iron", "wood")) {
             override fun nextQuestion(): Question = BDAY
+            //Question.MATERIAL -> "Материал не должен содержать цифр"
+            override fun validate(answer: String): Boolean = answer.trim().contains(Regex("\\d")).not()
+            override fun errorMessage(): String = "Материал не должен содержать цифр"
         },
         BDAY("Когда меня создали?", listOf("2993")) {
             override fun nextQuestion(): Question = SERIAL
+            //Question.BDAY -> "Год моего рождения должен содержать только цифры"
+            override fun validate(answer: String): Boolean = answer.trim().contains(Regex("^[0-9]*$"))
+            override fun errorMessage(): String = "Год моего рождения должен содержать только цифры"
         },
         SERIAL("Мой серийный номер?", listOf("2716057")) {
             override fun nextQuestion(): Question = IDLE
+            //Question.SERIAL -> "Серийный номер содержит только цифры, и их 7"
+            override fun validate(answer: String): Boolean = answer.trim().contains(Regex("^[0-9]{7}$"))
+            override fun errorMessage(): String = "Серийный номер содержит только цифры, и их 7"
         },
         IDLE("На этом все, вопросов больше нет", listOf()) {
             override fun nextQuestion(): Question = IDLE
+            override fun validate(answer: String): Boolean = true
+            override fun errorMessage(): String = ""
+
         };
 
 
         abstract fun  nextQuestion(): Question
+
+        abstract fun validate(answer: String):Boolean
+
+        abstract  fun  errorMessage(): String
     }
 }
