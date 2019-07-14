@@ -39,7 +39,7 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
                         Log.d("M_Bender", "${status.color}")
                         "Это неправильный ответ\n${question.question}" to status.color
                     } else {
-                        status = status.nextStatus()
+                        status = Status.NORMAL
                         question = Question.NAME
 
                         Log.d("M_Bender", "$wrongAnswer")
