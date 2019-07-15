@@ -32,7 +32,7 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
 
                 } else {
                     wrongAnswer += 1
-                    if (wrongAnswer < 4) {
+                    if (wrongAnswer < 3) {
                         status = status.nextStatus()
                         Log.d("M_Bender", "$wrongAnswer")
                         Log.d("M_Bender", "Это неправильный ответ\n${question.question}")
