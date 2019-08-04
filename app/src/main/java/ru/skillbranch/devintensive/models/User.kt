@@ -5,6 +5,8 @@ import java.util.*
 
 
 //https://github.com/Styort/dev-intensive-2019
+//https://github.com/russdreamer/dev-intensive-2019-tests
+//https://github.com/russdreamer/dev-intensive-2019
 
 data class User(
     val id : String,
